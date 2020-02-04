@@ -39,6 +39,12 @@ RUN curl -fsSL $kubectl_url/`curl -s $kubectl_url/stable.txt`/bin/linux/amd64/ku
   chmod +x /usr/bin/kubectl && \
   kubectl version --client
 
+# Install the Azure CLI binary with the DevOps extension
+RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash && \
+    az --version && \
+    az extension add -n azure-devops && \
+    az extension list
+
 COPY ./start.sh .
 RUN chmod +x start.sh
 

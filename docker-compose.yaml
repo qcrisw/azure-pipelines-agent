@@ -1,6 +1,8 @@
 version: '3.5'
 services:
   agent:
+    build: .
+    image: qcrisw/azagent:latest
     environment:
       - AZP_AGENT_NAME=qcri.{{.Task.Slot}} 
       - AZP_WORK=/azp/_work/qcri.{{.Task.Slot}} 
