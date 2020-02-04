@@ -1,0 +1,15 @@
+version: '3.5'
+services:
+  agent:
+    environment:
+      - AZP_AGENT_NAME=qcri.{{.Task.Slot}} 
+      - AZP_WORK=/azp/_work/qcri.{{.Task.Slot}} 
+      - AZP_URL=https://dev.azure.com/<orgname>
+      - AZP_TOKEN=
+      - AZP_POOL=
+    volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+        - /azp/_work:/azp/_work
+    deploy:
+      mode: replicated
+      replicas: 6
