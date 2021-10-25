@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 # To make it easier for build and release pipelines to run apt-get,
 # configure apt to not require confirmation (assume the -y argument by default)
@@ -12,15 +12,14 @@ RUN apt-get update \
         jq \
         git \
         iputils-ping \
-        libcurl3 \
-        libicu55 \
+        libcurl4 \
+        libicu60 \
         libunwind8 \
         netcat \
+        libssl1.0 \
 	gettext-base zip unzip sudo
 
-# install git lfs
-RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && \
-    apt-get install -y --no-install-recommends git-lfs && \
+RUN apt-get install -y --no-install-recommends git-lfs && \
     git lfs install && \
     rm -r /var/lib/apt/lists/*
 
@@ -45,7 +44,17 @@ RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash && \
     az extension add -n azure-devops && \
     az extension list
 
+ARG TARGETARCH=amd64
+ARG AGENT_VERSION=2.185.1
+
+RUN if [ "$TARGETARCH" = "amd64" ]; then \
+      AZP_AGENTPACKAGE_URL=https://vstsagentpackage.azureedge.net/agent/${AGENT_VERSION}/vsts-agent-linux-x64-${AGENT_VERSION}.tar.gz; \
+    else \
+      AZP_AGENTPACKAGE_URL=https://vstsagentpackage.azureedge.net/agent/${AGENT_VERSION}/vsts-agent-linux-${TARGETARCH}-${AGENT_VERSION}.tar.gz; \
+    fi; \
+    curl -LsS "$AZP_AGENTPACKAGE_URL" | tar -xz
+
 COPY ./start.sh .
 RUN chmod +x start.sh
 
-CMD ["./start.sh"]
+ENTRYPOINT [ "./start.sh" ]
