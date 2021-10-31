@@ -45,7 +45,7 @@ RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash && \
     az extension list
 
 ARG TARGETARCH=amd64
-ARG AGENT_VERSION=2.185.1
+ARG AGENT_VERSION=2.194.0
 
 RUN if [ "$TARGETARCH" = "amd64" ]; then \
       AZP_AGENTPACKAGE_URL=https://vstsagentpackage.azureedge.net/agent/${AGENT_VERSION}/vsts-agent-linux-x64-${AGENT_VERSION}.tar.gz; \
