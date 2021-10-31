@@ -6,7 +6,7 @@ on:
 
 jobs:
 
-  build:
+  buildAndPush:
 
     runs-on: ubuntu-latest
 
@@ -17,5 +17,7 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-    - name: Build and push the Docker image
+    - name: Build Docker image
       run: docker build . --tag qcrisw/azagent:latest
+    - name: Push Docker image
+      run: docker push qcrisw/azagent:latest
