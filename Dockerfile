@@ -17,7 +17,10 @@ RUN apt-get update \
         libunwind8 \
         netcat \
         libssl1.0 \
+        wget \
 	gettext-base zip unzip sudo
+
+RUN wget -q https://github.com/mikefarah/yq/releases/download/v4.14.2/yq_linux_amd64 -O /usr/bin/yq && chmod +x /usr/bin/yq
 
 RUN apt-get install -y --no-install-recommends git-lfs && \
     git lfs install && \
