@@ -10,7 +10,6 @@ RUN apt-get update \
         ca-certificates \
         curl \
         jq \
-        git \
         iputils-ping \
         libcurl4 \
         libicu60 \
@@ -22,9 +21,16 @@ RUN apt-get update \
 
 RUN wget -q https://github.com/mikefarah/yq/releases/download/v4.14.2/yq_linux_amd64 -O /usr/bin/yq && chmod +x /usr/bin/yq
 
-RUN apt-get install -y --no-install-recommends git-lfs && \
-    git lfs install && \
-    rm -r /var/lib/apt/lists/*
+# Install latest version of git
+RUN apt-get install -y --no-install-recommends software-properties-common  && \
+    add-apt-repository ppa:git-core/ppa -y && \
+    apt-get update && \
+    apt install git=1:2.35.1-0ppa1~ubuntu18.04.1
+
+# Install latest version of git-lfs
+RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && \
+    apt-get install -y --no-install-recommends git-lfs=3.1.2 && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /azp
 
