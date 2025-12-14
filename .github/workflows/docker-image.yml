@@ -22,7 +22,7 @@ jobs:
       run: echo "SHORT_SHA=${GITHUB_SHA:0:7}" >> $GITHUB_ENV
     - name: Build Docker image
       run: |
-        echo DOCKER_REPO=ghcr.io/${{ github.actor }}/azagent >> $GITHUB_ENV
+        echo "DOCKER_REPO=ghcr.io/qcrisw/azagent" >> $GITHUB_ENV
         docker build \
           -t ${DOCKER_REPO}:latest \
           -t ${DOCKER_REPO}:${GITHUB_SHA} \
