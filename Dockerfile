@@ -3,7 +3,24 @@ ENV TARGETARCH="linux-musl-x64"
 
 RUN apk update && \
   apk upgrade && \
-  apk add bash curl gcc git git-lfs icu-libs jq musl-dev python3-dev libffi-dev openssl-dev cargo make envsubst docker=29.1.3-r0 kubectl
+  apk add \
+    bash \
+    curl \
+    gcc \
+    git \
+    git-lfs \
+    icu-libs \
+    jq \
+    musl-dev \
+    python3-dev \
+    libffi-dev \
+    openssl-dev \
+    cargo \
+    make \
+    envsubst \
+    docker=29.1.3-r0 \
+    kubectl \
+    yq
 
 # Install Skaffold
 RUN curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64 && \
