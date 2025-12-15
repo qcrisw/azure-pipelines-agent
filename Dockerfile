@@ -20,7 +20,15 @@ RUN apk update && \
     envsubst \
     docker=29.1.3-r0 \
     kubectl \
-    yq
+    yq \
+    tar
+
+# Install helm
+RUN curl -Lo helm-v4.0.4-linux-amd64.tar.gz https://get.helm.sh/helm-v4.0.4-linux-amd64.tar.gz && \
+  tar -zxvf helm-v4.0.4-linux-amd64.tar.gz && \
+  install linux-amd64/helm /usr/local/bin && \
+  rm helm-v4.0.4-linux-amd64.tar.gz && \
+  rm -rf linux-amd64
 
 # Install Skaffold
 RUN curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64 && \
