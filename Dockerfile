@@ -30,9 +30,13 @@ RUN curl -Lo helm-v4.0.4-linux-amd64.tar.gz https://get.helm.sh/helm-v4.0.4-linu
   rm helm-v4.0.4-linux-amd64.tar.gz && \
   rm -rf linux-amd64
 
-# Install Skaffold
-RUN curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64 && \
+# Install skaffold
+RUN curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/v2.17.1/skaffold-linux-amd64 && \
   install skaffold /usr/local/bin/
+
+# Install sops
+RUN curl -Lo sops https://github.com/getsops/sops/releases/download/v3.11.0/sops-v3.11.0.linux.amd64 && \
+  install sops /usr/local/bin/
 
 # Install Azure CLI
 RUN pip install --upgrade pip
